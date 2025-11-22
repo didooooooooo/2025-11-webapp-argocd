@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: front
+  name: nginx
+  namespace: front-ns
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      imagePullSecrets:
+      - name: ecr-secret
+      affinity:                                   
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:                         
+                - key: app
+                  operator: In
+                  values:
+                  - front
+              topologyKey: kubernetes.io/hostname
+               
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        nodeTaintsPolicy: Honor
+        labelSelector:                       
+          matchLabels:                       
+            app: front
+                                    
+      containers:
+      - image: 070238434919.dkr.ecr.ap-northeast-2.amazonaws.com/nginx:v4.0
+        name: nginx
+        ports:  # 포트 추가
+        - containerPort: 80
+        
+        livenessProbe:
+          tcpSocket:     # HTTP → TCP로 변경
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10  
+          
+        readinessProbe:
+          tcpSocket:     # HTTP → TCP로 변경
+            port: 80 
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"    
+            cpu: "500m"
+

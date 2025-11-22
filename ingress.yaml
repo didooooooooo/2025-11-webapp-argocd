@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: helper-ingress
+  namespace: front-ns  # [중요] 본인의 Nginx 서비스가 있는 네임스페이스로 수정!
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:                # host: 부분을 지웠습니다. (모든 주소 허용)
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-svc-np # [확인] 실제 서비스 이름과 글자 하나라도 틀리면 안 됨!
+            port:
+              number: 80

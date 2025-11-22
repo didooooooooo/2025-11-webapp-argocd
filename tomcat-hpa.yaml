@@ -1,0 +1,14 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler         # HPA로 생성
+metadata:
+  name: tomcat-hpa
+  namespace: back-ns
+spec:
+  maxReplicas: 10                     # 최대 10개까지로 지정
+  minReplicas: 1                      # 최소 1개까지로 지정
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: tomcat
+  targetCPUUtilizationPercentage: 5
+
