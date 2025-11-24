@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend-nginx
+  name: frontend-nginx
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: frontend-nginx
+  template:
+    metadata:
+      labels:
+        app: frontend-nginx
+    spec:
+      containers:
+      - image: powermvp/netflix:v1.0
+        name: frontend-nginx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
