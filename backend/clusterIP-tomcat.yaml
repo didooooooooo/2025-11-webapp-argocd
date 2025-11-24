@@ -8,6 +8,7 @@ spec:
   clusterIP: 10.100.100.100      
   selector:
     app: back
+  sessionAffinity: ClientIP  
   ports:
   - protocol: TCP
     port: 8080
