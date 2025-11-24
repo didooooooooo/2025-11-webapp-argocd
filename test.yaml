@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: frontend-nginx
-  name: frontend-nginx
+  name: test
 spec:
   replicas: 5
   selector:
@@ -17,6 +17,7 @@ spec:
       containers:
       - image: powermvp/netflix:v1.0
         name: frontend-nginx
+
 
 
 
