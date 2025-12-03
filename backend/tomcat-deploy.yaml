@@ -44,7 +44,7 @@ spec:
         - containerPort: 8080
         env:
         - name: DB_URL
-          value: "jdbc:mysql://10.0.2.105:3306/VEC_PRD_DB?useSSL=false&allowPublicKeyRetrieval=true"
+          value: "jdbc:mysql://10.0.2.40:3306/VEC_PRD_DB?useSSL=false&allowPublicKeyRetrieval=true"
         - name: DB_USER
           value: "admin"
         - name: DB_PASSWORD
