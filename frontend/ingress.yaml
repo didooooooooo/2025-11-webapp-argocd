@@ -7,6 +7,10 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx  # "nginx-example" → "nginx"로 변경 (deploy.yaml에서 확인한 클래스명)
+  sessionAffinity: ClientIP 
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
   rules:
   - http:
       paths:
