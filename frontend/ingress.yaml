@@ -1,17 +1,20 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: helper-ingress
-  namespace: front-ns  # [중요] 본인의 Nginx 서비스가 있는 네임스페이스로 수정!
+  name: nginx-ingress  # 의미있는 이름으로 변경
+  namespace: front-ns   # 네임스페이스 추가 (중요!)
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx
+  ingressClassName: nginx  # "nginx-example" → "nginx"로 변경 (deploy.yaml에서 확인한 클래스명)
   rules:
-  - http:                # host: 부분을 지웠습니다. (모든 주소 허용)
+  - host: choha.shop     # 호스트명 추가 (선택사항)
+    http:
       paths:
-      - path: /
+      - path: /            # "/testpath" → "/" (전체 경로)
         pathType: Prefix
         backend:
           service:
-            name: nginx-svc-np # [확인] 실제 서비스 이름과 글자 하나라도 틀리면 안 됨!
+            name: nginx-svc-np  # "test" → 실제 nginx 서비스명
             port:
               number: 80
