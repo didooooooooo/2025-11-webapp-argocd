@@ -8,8 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx  # "nginx-example" → "nginx"로 변경 (deploy.yaml에서 확인한 클래스명)
   rules:
-  - host: choha.shop     # 호스트명 추가 (선택사항)
-    http:
+  - http:
       paths:
       - path: /            # "/testpath" → "/" (전체 경로)
         pathType: Prefix
