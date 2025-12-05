@@ -1,23 +1,71 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx-ingress  # 의미있는 이름으로 변경
-  namespace: front-ns   # 네임스페이스 추가 (중요!)
+  name: nginx-ingress
+  namespace: front-ns
   annotations:
+    argocd.argoproj.io/tracking-id: front:networking.k8s.io/Ingress:front-ns/nginx-ingress
+    nginx.ingress.kubernetes.io/affinity: cookie
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-name: "INGRESSCOOKIE"
-    nginx.ingress.kubernetes.io/session-cookie-expires: "86400"
-    nginx.ingress.kubernetes.io/session-cookie-max-age: "86400"
+    nginx.ingress.kubernetes.io/session-cookie-expires: '86400'
+    nginx.ingress.kubernetes.io/session-cookie-max-age: '86400'
+    nginx.ingress.kubernetes.io/session-cookie-name: INGRESSCOOKIE
 spec:
-  ingressClassName: nginx  # "nginx-example" → "nginx"로 변경 (deploy.yaml에서 확인한 클래스명)
+  ingressClassName: nginx
   rules:
-  - http:
-      paths:
-      - path: /            # "/testpath" → "/" (전체 경로)
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx-svc-np  # "test" → 실제 nginx 서비스명
-            port:
-              number: 80
+    # -------------------------------------------------------
+    # 1번째 팀원 도메인
+    # 아래 "도메인주소1"을 지우고 실제 주소(예: a.example.com)를 넣으세요
+    # -------------------------------------------------------
+    - host: www.l-didoo-it.shop
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-svc-np
+                port:
+                  number: 80
+
+    # -------------------------------------------------------
+    # 2번째 팀원 도메인
+    # -------------------------------------------------------
+    - host: choha.shop
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-svc-np
+                port:
+                  number: 80
+
+    # -------------------------------------------------------
+    # 3번째 팀원 도메인
+    # -------------------------------------------------------
+    - host: awskit.store
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-svc-np
+                port:
+                  number: 80
+
+    # -------------------------------------------------------
+    # 4번째 팀원 도메인
+    # -------------------------------------------------------
+    - host: chiott.store
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-svc-np
+                port:
+                  number: 80
