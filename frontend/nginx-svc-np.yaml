@@ -7,10 +7,10 @@ spec:
   type: NodePort
   selector:
     app: front
-  sessionAffinity: ClientIP 
-  sessionAffinityConfig:
-    clientIP:
-      timeoutSeconds: 10800
+#  sessionAffinity: ClientIP 
+#  sessionAffinityConfig:
+#    clientIP:
+#      timeoutSeconds: 10800
   ports:
     - port: 80
       targetPort: 80
