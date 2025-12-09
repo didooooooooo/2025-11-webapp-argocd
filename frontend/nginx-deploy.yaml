@@ -44,18 +44,38 @@ spec:
         name: nginx
         ports:  # 포트 추가
         - containerPort: 80
-        
+
+# liveness / readiness ver1.
+#        livenessProbe:
+#          tcpSocket:     # HTTP → TCP로 변경
+#            port: 80
+#          initialDelaySeconds: 30
+#          periodSeconds: 10  
+          
+#        readinessProbe:
+#          tcpSocket:     # HTTP → TCP로 변경
+#            port: 80 
+#          initialDelaySeconds: 5
+#          periodSeconds: 5
+
+# liveness / readiness ver2.
         livenessProbe:
-          tcpSocket:     # HTTP → TCP로 변경
+          tcpSocket:       # Liveness는 TCP로 유지 (안전빵)
             port: 80
           initialDelaySeconds: 30
-          periodSeconds: 10  
+          periodSeconds: 10
+          timeoutSeconds: 5  # 타임아웃 명시 권장
           
         readinessProbe:
-          tcpSocket:     # HTTP → TCP로 변경
-            port: 80 
+          httpGet:         # Readiness는 HTTP로 변경 (품질 관리)
+            path: /        # 혹은 /healthz 같은 가벼운 경로
+            port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+
+          
           
         resources:
          # requests:
