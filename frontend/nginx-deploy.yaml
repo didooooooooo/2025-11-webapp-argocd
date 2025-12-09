@@ -6,7 +6,7 @@ metadata:
   name: nginx
   namespace: front-ns
 spec:
-  replicas: 3
+  replicas: 5
   selector:
     matchLabels:
       app: front
