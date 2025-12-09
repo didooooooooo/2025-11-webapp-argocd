@@ -40,7 +40,7 @@ spec:
             app: front
                                     
       containers:
-      - image: 070238434919.dkr.ecr.ap-northeast-2.amazonaws.com/nginx:v2.2
+      - image: 070238434919.dkr.ecr.ap-northeast-2.amazonaws.com/nginx:v3.2
         name: nginx
         ports:  # 포트 추가
         - containerPort: 80
