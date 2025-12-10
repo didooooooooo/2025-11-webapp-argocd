@@ -43,7 +43,7 @@ spec:
           matchLabels:
             app: back
       containers:
-      - image: 070238434919.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat:v1.2
+      - image: 070238434919.dkr.ecr.ap-northeast-2.amazonaws.com/tomcat:v2.2
         name: tomcat-container
         ports:
         - containerPort: 8080
