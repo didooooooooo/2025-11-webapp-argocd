@@ -15,6 +15,11 @@ spec:
       labels:
         app: front
     spec:
+      # ---------------------------------------------------------
+      # [추가] 앱 노드(worker-2, 3, 4)로만 가라!
+      nodeSelector:
+        role: app
+      # ---------------------------------------------------------
       imagePullSecrets:
       - name: ecr-secret
       affinity:                                   
@@ -23,7 +28,7 @@ spec:
           - weight: 100
             podAffinityTerm:
               labelSelector:
-                matchExpressions:                         
+                matchExpressions:                          
                 - key: app
                   operator: In
                   values:
@@ -35,47 +40,32 @@ spec:
         topologyKey: kubernetes.io/hostname
         whenUnsatisfiable: DoNotSchedule
         nodeTaintsPolicy: Honor
-        labelSelector:                       
-          matchLabels:                       
+        labelSelector:                        
+          matchLabels:                        
             app: front
                                     
       containers:
       - image: 070238434919.dkr.ecr.ap-northeast-2.amazonaws.com/nginx:v3.2
         name: nginx
-        ports:  # 포트 추가
+        ports:
         - containerPort: 80
 
-# liveness / readiness ver1.
-#        livenessProbe:
-#          tcpSocket:     # HTTP → TCP로 변경
-#            port: 80
-#          initialDelaySeconds: 30
-#          periodSeconds: 10  
-          
-#        readinessProbe:
-#          tcpSocket:     # HTTP → TCP로 변경
-#            port: 80 
-#          initialDelaySeconds: 5
-#          periodSeconds: 5
-
-# liveness / readiness ver2.
+# liveness / readiness ver2. (설정 잘 하셨습니다!)
         livenessProbe:
-          tcpSocket:       # Liveness는 TCP로 유지 (안전빵)
+          tcpSocket:       # Liveness는 TCP로 유지 (연결만 확인)
             port: 80
           initialDelaySeconds: 30
           periodSeconds: 10
-          timeoutSeconds: 5  # 타임아웃 명시 권장
+          timeoutSeconds: 5  
           
         readinessProbe:
-          httpGet:         # Readiness는 HTTP로 변경 (품질 관리)
-            path: /        # 혹은 /healthz 같은 가벼운 경로
+          httpGet:         # Readiness는 HTTP로 확인 (서비스 품질 확인)
+            path: /        
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
           timeoutSeconds: 3
           failureThreshold: 3
-
-          
           
         resources:
          # requests:
@@ -84,4 +74,3 @@ spec:
           limits:
             memory: "32Mi"    
             cpu: "150m"
-
