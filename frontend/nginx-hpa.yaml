@@ -5,7 +5,7 @@ metadata:
   namespace: front-ns
 spec:
   maxReplicas: 10                     # 최대 10개까지로 지정
-  minReplicas: 3                      # 최소 1개까지로 지정
+  minReplicas: 5                      # 최소 1개까지로 지정
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
