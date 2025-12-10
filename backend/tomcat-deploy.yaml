@@ -15,6 +15,11 @@ spec:
       labels:
         app: back
     spec:
+      # ---------------------------------------------------------
+      # [핵심 변경] role=app 라벨이 있는 노드(worker-2,3,4)에만 배치
+      nodeSelector:
+        role: app
+      # ---------------------------------------------------------
       imagePullSecrets:
       - name: ecr-secret
       affinity:
@@ -68,4 +73,3 @@ spec:
           limits:
             memory: "200Mi"
             cpu: "600m"
-
