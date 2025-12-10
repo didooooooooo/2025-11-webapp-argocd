@@ -6,7 +6,7 @@ metadata:
   name: nginx
   namespace: front-ns
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: front
@@ -17,8 +17,8 @@ spec:
     spec:
       # ---------------------------------------------------------
       # [추가] 앱 노드(worker-2, 3, 4)로만 가라!
-      nodeSelector:
-        role: app
+      #nodeSelector:
+      #  role: app
       # ---------------------------------------------------------
       imagePullSecrets:
       - name: ecr-secret
